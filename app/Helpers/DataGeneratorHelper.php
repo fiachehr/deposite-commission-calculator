@@ -17,6 +17,9 @@ class DataGeneratorHelper
     public static function generateRandomData(int $count)
     {
 
+        $path = public_path('currency-exchange-rates.json');
+        $currencies = json_decode(file_get_contents($path), true)['rates'];
+
         $dummyData = [];
         $sampleCurrency = ['USD', 'TRY', 'EUR', 'IRR', 'JPY', 'UAH'];
         $userType = ['private', 'business'];
@@ -27,12 +30,14 @@ class DataGeneratorHelper
                 $dateCounter--;
             }
 
+            $currentCurrency = $sampleCurrency[rand(0, 5)];
+
             $data['date'] = Carbon::today()->addDay($dateCounter)->format("Y-m-d");
             $data['user_id'] = rand(100, 110);
             $data['type'] = $userType[rand(0, 1)];
             $data['operation'] = $operationType[rand(0, 1)];
-            $data['amount'] = rand(2, 2000);
-            $data['currency'] = $sampleCurrency[rand(0, 5)];
+            $data['amount'] = round(rand(2, 2000) * $currencies[$currentCurrency]);
+            $data['currency'] = $currentCurrency;
             array_push($dummyData, $data);
         }
 
@@ -55,7 +60,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 400,
-                        'currency' => 'EURO',
+                        'currency' => 'IRR',
                     ],
                     [
                         'date' => '2022-03-01',
@@ -63,7 +68,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 650,
-                        'currency' => 'EURO',
+                        'currency' => 'IRR',
                     ],
                     [
                         'date' => '2022-03-03',
@@ -71,7 +76,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 100,
-                        'currency' => 'EURO',
+                        'currency' => 'IRR',
                     ],
                     [
                         'date' => '2022-03-10',
@@ -79,7 +84,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 1100,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-10',
@@ -87,7 +92,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 550,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-10',
@@ -95,7 +100,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 1200,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-17',
@@ -103,7 +108,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 100,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-17',
@@ -111,7 +116,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 100,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-17',
@@ -119,7 +124,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 900,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-17',
@@ -127,7 +132,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 105,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-17',
@@ -135,7 +140,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 900,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-17',
@@ -143,7 +148,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 750,
-                        'currency' => 'EURO',
+                        'currency' => 'EUR',
                     ],
                 ];
     }

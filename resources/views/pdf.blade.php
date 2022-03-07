@@ -47,12 +47,15 @@
             <tr>
                 <th>#</th>
                 <th>User ID</th>
-                <th>Amount</th>
+                <th>Amount In €</th>
+                <th>Current Amount</th>
                 <th>Type</th>
                 <th>Operation</th>
-                <th class="date">Date</th>
+                <th>Date</th>
                 <th>Charge</th>
                 <th>Commission</th>
+                <th>Currency</th>
+                <th>Rate</th>
             </tr>
         </thead>
         <tbody>
@@ -60,12 +63,15 @@
             <tr>
                 <td>{{$counter}}</td>
                 <td>{{$item['user_id']}}</td>
-                <td>{{$item['amount']}}</td>
+                <td>{{number_format($item['amount'])}}</td>
+                <td>{{number_format($item['currentAmount'])}}</td>
                 <td>{{$item['type']}}</td>
                 <td>{{$item['operation']}}</td>
                 <td>{{$item['date']}}</td>
-                <td>{{$item['charge']}}</td>
-                <td>{{$item['commission']}}</td>
+                <td>{{number_format($item['charge'])}}</td>
+                <td>{{number_format($item['commission'])}}</td>
+                <td>{{$item['currency']}}</td>
+                <td>{{number_format($item['currencyRate'])}}</td>
             </tr>
             @php
                 $counter++;

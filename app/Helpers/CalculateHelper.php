@@ -24,7 +24,12 @@ class CalculateHelper
         $calculatedData = [];
         $userStack = [];
 
+        $path = public_path('currency-exchange-rates.json');
+        $currencies = json_decode(file_get_contents($path), true)['rates'];
+
         foreach ($list as $opr) {
+
+            $amount = round($opr['amount'] / $currencies[$opr['currency']],2);
 
             if ($opr['operation'] == 'withdraw') {
 
@@ -33,26 +38,27 @@ class CalculateHelper
                     $week = date("W", strtotime($opr['date']));
                     $commissionData['commission'] = 0;
 
+
                     if (isset($userStack[$opr['user_id']])) {
 
                         $operationCounter = $userStack[$opr['user_id']]['counter']++;
 
-                        $newAmount = $userStack[$opr['user_id']]['amount'] + $opr['amount'];
+                        $newAmount = $userStack[$opr['user_id']]['amount'] + $amount;
+
 
                         if ($week == $userStack[$opr['user_id']]['week']) {
 
                             if ($userStack[$opr['user_id']]['flag']) {
 
-
-
                                 if ($userStack[$opr['user_id']]['counter'] > $maxWithdraw) {
 
-                                    $commissionData['commission'] = $opr['amount'] * ($commissionPercent / 100);
+                                    $commissionData['commission'] = round(($amount * ($commissionPercent / 100)) * $currencies[$opr['currency']],2);
                                     $userStack[$opr['user_id']] = ['amount' => $newAmount, 'week' => $week, 'counter' => $operationCounter, 'flag' => 0];
                                 } else {
                                     if (($newAmount - $maxWithdrawAmount) > 0) {
 
-                                        $commissionData['commission'] = ($newAmount - $maxWithdrawAmount) * ($commissionPercent / 100);
+
+                                        $commissionData['commission'] = round((($newAmount - $maxWithdrawAmount) * ($commissionPercent / 100)) * $currencies[$opr['currency']],2);
                                         $userStack[$opr['user_id']] = ['amount' => $newAmount, 'week' => $week, 'counter' => $operationCounter, 'flag' => 0];
                                     } else {
                                         $userStack[$opr['user_id']]['amount'] = $newAmount;
@@ -61,42 +67,45 @@ class CalculateHelper
                                 }
                             } else {
 
-                                $commissionData['commission'] = $opr['amount'] * ($commissionPercent / 100);
+                                $commissionData['commission'] = round(($amount * ($commissionPercent / 100)) * $currencies[$opr['currency']],2);
                             }
                         } else {
 
-                            if ($opr['amount'] > $maxWithdrawAmount) {
+                            if ($amount > $maxWithdrawAmount) {
 
-                                $commissionData['commission'] = ($opr['amount'] - $maxWithdrawAmount) * ($commissionPercent / 100);
+                                $commissionData['commission'] = round((($amount - $maxWithdrawAmount) * ($commissionPercent / 100)) * $currencies[$opr['currency']],2);
                                 $userStack[$opr['user_id']] = ['amount' => $newAmount, 'week' => $week, 'counter' => $operationCounter, 'flag' => 0];
                             } else {
 
-                                $userStack[$opr['user_id']] = ['amount' => $opr['amount'], 'week' => $week, 'counter' => 1, 'flag' => 1];
+                                $userStack[$opr['user_id']] = ['amount' => $amount, 'week' => $week, 'counter' => 1, 'flag' => 1];
                             }
                         }
                     } else {
 
-                        $userStack[$opr['user_id']] = ['amount' => $opr['amount'], 'week' => $week, 'counter' => 1, 'flag' => 1];
+                        $userStack[$opr['user_id']] = ['amount' => $amount, 'week' => $week, 'counter' => 1, 'flag' => 1];
                     }
 
-                    $commissionData['amount'] = $opr['amount'];
+                    $commissionData['amount'] = $amount;
                     $commissionData['charge'] = 0;
                 } else {
 
-                    $commissionData['amount'] = $opr['amount'];
-                    $commissionData['commission'] = $opr['amount'] * ($businessCommissionPercent / 100);
+                    $commissionData['amount'] = $amount;
+                    $commissionData['commission'] = round($opr['amount'] * ($businessCommissionPercent / 100),2);
                     $commissionData['charge'] = 0;
                 }
             } else {
 
-                $commissionData['amount'] = $opr['amount'];
+                $commissionData['amount'] = $amount;
                 $commissionData['commission'] = 0;
                 $commissionData['charge'] = $opr['amount'] * ($chargePercent / 100);
             }
 
             $commissionData['user_id'] = $opr['user_id'];
+            $commissionData['currentAmount'] = $opr['amount'];
+            $commissionData['currencyRate'] = $currencies[$opr['currency']];
             $commissionData['type'] = $opr['type'];
             $commissionData['operation'] = $opr['operation'];
+            $commissionData['currency'] = $opr['currency'];
             $commissionData['date'] = $opr['date'];
             array_push($calculatedData, $commissionData);
         }

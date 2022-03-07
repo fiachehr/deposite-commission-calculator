@@ -24,27 +24,33 @@ $counter = 1;
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">User ID</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Operation</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Charge</th>
-                            <th scope="col">Commission</th>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col" class="text-center">User ID</th>
+                            <th scope="col" class="text-center">Amount In €</th>
+                            <th scope="col" class="text-center">Current Amount</th>
+                            <th scope="col" class="text-center">Type</th>
+                            <th scope="col" class="text-center">Operation</th>
+                            <th scope="col" class="text-center">Date</th>
+                            <th scope="col" class="text-center">Charge</th>
+                            <th scope="col" class="text-center">Commission</th>
+                            <th scope="col" class="text-center">Currency</th>
+                            <th scope="col" class="text-center">Rate</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($result as $item)
                         <tr>
                             <td>{{$counter}}</td>
-                            <td scope="col">{{$item['user_id']}}</td>
-                            <td scope="col">{{$item['amount']}}</td>
-                            <td scope="col">{{$item['type']}}</td>
-                            <td scope="col">{{$item['operation']}}</td>
-                            <td scope="col">{{$item['date']}}</td>
-                            <td scope="col">{{$item['charge']}}</td>
-                            <td scope="col">{{$item['commission']}}</td>
+                            <td scope="col" class="text-center">{{$item['user_id']}}</td>
+                            <td scope="col" class="text-center">{{number_format($item['amount'])}}</td>
+                            <td scope="col" class="text-center">{{number_format($item['currentAmount'])}}</td>
+                            <td scope="col" class="text-center">{{$item['type']}}</td>
+                            <td scope="col" class="text-center">{{$item['operation']}}</td>
+                            <td scope="col" class="text-center">{{$item['date']}}</td>
+                            <td scope="col" class="text-center">{{number_format($item['charge'])}}</td>
+                            <td scope="col" class="text-center">{{number_format($item['commission'])}}</td>
+                            <td scope="col" class="text-center">{{$item['currency']}}</td>
+                            <td scope="col" class="text-center">{{number_format($item['currencyRate'])}}</td>
                         </tr>
                         @php
                         $counter++;
