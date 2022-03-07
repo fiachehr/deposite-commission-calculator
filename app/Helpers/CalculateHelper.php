@@ -41,7 +41,7 @@ class CalculateHelper
 
                     if (isset($userStack[$opr['user_id']])) {
 
-                        $operationCounter = $userStack[$opr['user_id']]['counter']++;
+                        $operationCounter = $userStack[$opr['user_id']]['counter']+1;
 
                         $newAmount = $userStack[$opr['user_id']]['amount'] + $amount;
 
@@ -50,13 +50,14 @@ class CalculateHelper
 
                             if ($userStack[$opr['user_id']]['flag']) {
 
-                                if ($userStack[$opr['user_id']]['counter'] > $maxWithdraw) {
+                                if ($userStack[$opr['user_id']]['counter'] >= $maxWithdraw) {
 
                                     $commissionData['commission'] = round(($amount * ($commissionPercent / 100)) * $currencies[$opr['currency']],2);
                                     $userStack[$opr['user_id']] = ['amount' => $newAmount, 'week' => $week, 'counter' => $operationCounter, 'flag' => 0];
-                                } else {
-                                    if (($newAmount - $maxWithdrawAmount) > 0) {
 
+                                } else {
+
+                                    if (($newAmount - $maxWithdrawAmount) > 0) {
 
                                         $commissionData['commission'] = round((($newAmount - $maxWithdrawAmount) * ($commissionPercent / 100)) * $currencies[$opr['currency']],2);
                                         $userStack[$opr['user_id']] = ['amount' => $newAmount, 'week' => $week, 'counter' => $operationCounter, 'flag' => 0];
@@ -82,7 +83,14 @@ class CalculateHelper
                         }
                     } else {
 
-                        $userStack[$opr['user_id']] = ['amount' => $amount, 'week' => $week, 'counter' => 1, 'flag' => 1];
+
+                        if ($amount > $maxWithdrawAmount) {
+
+                            $commissionData['commission'] = round((($amount - $maxWithdrawAmount) * ($commissionPercent / 100)) * $currencies[$opr['currency']],2);
+                            $userStack[$opr['user_id']] = ['amount' => $amount, 'week' => $week, 'counter' => 1, 'flag' => 0];
+                        }else{
+                            $userStack[$opr['user_id']] = ['amount' => $amount, 'week' => $week, 'counter' => 1, 'flag' => 1];
+                        }
                     }
 
                     $commissionData['amount'] = $amount;
