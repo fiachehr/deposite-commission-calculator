@@ -1,8 +1,3 @@
-@php
-foreach($currencies as $key => $value){
-$currencyList[$key] = $key;
-}
-@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,7 +80,7 @@ $currencyList[$key] = $key;
                 </div>
 
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     {!! Form::label('businessWithdrawCommission', 'Business Clients Withdraw') !!}
                     {!! Form::number('businessWithdrawCommission', '0.5', ['step' => '0.1' ,'id' =>
                     'businessWithdrawCommission', 'tabindex' => '7', 'class' =>
@@ -95,22 +90,12 @@ $currencyList[$key] = $key;
                     @enderror
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     {!! Form::label('privateWithdrawCommission', 'Private Clients Withdraw') !!}
                     {!! Form::number('privateWithdrawCommission', '0.3', ['step' => '0.1' ,'id' =>
                     'privateWithdrawCommission', 'tabindex' => '8', 'class' =>
                     $errors->has('privateWithdrawCommission') ? 'form-control is-invalid' : 'form-control']) !!}
                     @error('privateWithdrawCommission')
-                    <span class="invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group col-md-4">
-                    {!! Form::label('currency', 'Calculate Currency') !!}
-                    {!! Form::select('currency', $currencyList, 'current', ['class' => 'form-select
-                    js-example-basic-single',
-                    'tabindex' => '9']) !!}
-                    @error('currency')
                     <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>

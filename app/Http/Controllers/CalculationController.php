@@ -20,9 +20,7 @@ class CalculationController extends Controller
      */
     public function index()
     {
-        $path = public_path('currency-exchange-rates.json');
-        $currencies = json_decode(file_get_contents($path), true)['rates'];
-        return view('index',compact('currencies'));
+        return view('index');
     }
 
     public function calculate(CalculateRequest $request)
