@@ -58,12 +58,12 @@ You can export results as HTML, PDF or Excel Files
 Export data as PDF file maybe need time, please check this feature for a maximum of 1000 data
 ## Run Locally
 
-After pull codes'
-in project folder
+After pull codes<br/>
+in project folder<br/><br/>
 
-composer install
-composer dump-autoload
-php artisan serve
+composer install<br/>
+composer dump-autoload<br/>
+php artisan serve<br/>
 
 ## Unit Testing
 
