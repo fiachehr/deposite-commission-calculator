@@ -105,7 +105,7 @@ class CalculateHelper
 
                 $commissionData['amount'] = $amount;
                 $commissionData['commission'] = 0;
-                $commissionData['charge'] = $opr['amount'] * ($chargePercent / 100);
+                $commissionData['charge'] = round($opr['amount'] * ($chargePercent / 100),3);
             }
 
             $commissionData['user_id'] = $opr['user_id'];
