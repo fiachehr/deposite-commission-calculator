@@ -68,8 +68,8 @@
                 <td>{{$item['type']}}</td>
                 <td>{{$item['operation']}}</td>
                 <td>{{$item['date']}}</td>
-                <td>{{number_format($item['charge'])}}</td>
-                <td>{{number_format($item['commission'])}}</td>
+                <td>{{$item['charge']}}</td>
+                <td>{{$item['commission']}}</td>
                 <td>{{$item['currency']}}</td>
                 <td>{{number_format($item['currencyRate'])}}</td>
             </tr>
