@@ -503,9 +503,189 @@ class CalculatorTest extends TestCase
         ];
 
         $result = CalculateHelper::calculate($sampleData);
-        assertEquals(round($result[0]['charge'] / $currencies[$result[0]['currency']],3), 0.375);
+        assertEquals(round($result[0]['charge'] / $currencies[$result[0]['currency']], 3), 0.375);
         assertEquals(round($result[1]['charge'] / $currencies[$result[1]['currency']], 3), 0.225);
         assertEquals(round($result[2]['charge'] / $currencies[$result[2]['currency']], 3), 0.09);
         assertEquals(round($result[3]['charge'] / $currencies[$result[3]['currency']], 3), 0.045);
+    }
+
+    /** @test */
+
+    public function when_data_have_amount_lower_than_zero()
+    {
+
+
+        $sampleData = [
+            [
+                'date' => '2022-03-03',
+                'user_id' => '3',
+                'type' => 'business',
+                'operation' => 'deposit',
+                'amount' => 1250,
+                'currency' => 'EUR',
+            ],
+            [
+                'date' => '2022-03-01',
+                'user_id' => '1',
+                'type' => 'private',
+                'operation' => 'deposit',
+                'amount' => 846.77325,
+                'currency' => 'USD',
+            ],
+            [
+                'date' => '2022-03-01',
+                'user_id' => '1',
+                'type' => 'business',
+                'operation' => 'deposit',
+                'amount' => 14310472.2138,
+                'currency' => 'IRR',
+            ],
+            [
+                'date' => '2022-03-03',
+                'user_id' => '1',
+                'type' => 'private',
+                'operation' => 'deposit',
+                'amount' => -1,
+                'currency' => 'TRY',
+            ],
+        ];
+
+        $result = CalculateHelper::calculate($sampleData);
+        assertEquals($result, false);
+    }
+
+    /** @test */
+
+    public function when_data_have_amount_equals_zero()
+    {
+
+
+        $sampleData = [
+            [
+                'date' => '2022-03-03',
+                'user_id' => '3',
+                'type' => 'business',
+                'operation' => 'deposit',
+                'amount' => 1250,
+                'currency' => 'EUR',
+            ],
+            [
+                'date' => '2022-03-01',
+                'user_id' => '1',
+                'type' => 'private',
+                'operation' => 'deposit',
+                'amount' => 846.77325,
+                'currency' => 'USD',
+            ],
+            [
+                'date' => '2022-03-01',
+                'user_id' => '1',
+                'type' => 'business',
+                'operation' => 'deposit',
+                'amount' => 14310472.2138,
+                'currency' => 'IRR',
+            ],
+            [
+                'date' => '2022-03-03',
+                'user_id' => '1',
+                'type' => 'private',
+                'operation' => 'deposit',
+                'amount' => 0,
+                'currency' => 'TRY',
+            ],
+        ];
+
+        $result = CalculateHelper::calculate($sampleData);
+        assertEquals($result, false);
+    }
+
+    /** @test */
+
+    public function when_data_have_wrong_type()
+    {
+
+
+        $sampleData = [
+            [
+                'date' => '2022-03-03',
+                'user_id' => '3',
+                'type' => 'business',
+                'operation' => 'deposit',
+                'amount' => 1250,
+                'currency' => 'EUR',
+            ],
+            [
+                'date' => '2022-03-01',
+                'user_id' => '1',
+                'type' => 'private',
+                'operation' => 'deposit',
+                'amount' => 846.77325,
+                'currency' => 'USD',
+            ],
+            [
+                'date' => '2022-03-01',
+                'user_id' => '1',
+                'type' => 'business',
+                'operation' => 'deposit',
+                'amount' => 14310472.2138,
+                'currency' => 'IRR',
+            ],
+            [
+                'date' => '2022-03-03',
+                'user_id' => '1',
+                'type' => 'private-type',
+                'operation' => 'deposit',
+                'amount' => 100,
+                'currency' => 'TRY',
+            ],
+        ];
+
+        $result = CalculateHelper::calculate($sampleData);
+        assertEquals($result, false);
+    }
+
+    /** @test */
+
+    public function when_data_have_wrong_operation()
+    {
+
+
+        $sampleData = [
+            [
+                'date' => '2022-03-03',
+                'user_id' => '3',
+                'type' => 'business',
+                'operation' => 'deposit',
+                'amount' => 1250,
+                'currency' => 'EUR',
+            ],
+            [
+                'date' => '2022-03-01',
+                'user_id' => '1',
+                'type' => 'private',
+                'operation' => 'deposit',
+                'amount' => 846.77325,
+                'currency' => 'USD',
+            ],
+            [
+                'date' => '2022-03-01',
+                'user_id' => '1',
+                'type' => 'business',
+                'operation' => 'deposit',
+                'amount' => 14310472.2138,
+                'currency' => 'IRR',
+            ],
+            [
+                'date' => '2022-03-03',
+                'user_id' => '1',
+                'type' => 'private',
+                'operation' => 'deposit-operation',
+                'amount' => 100,
+                'currency' => 'TRY',
+            ],
+        ];
+
+        $result = CalculateHelper::calculate($sampleData);
+        assertEquals($result, false);
     }
 }

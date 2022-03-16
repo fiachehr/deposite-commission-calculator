@@ -41,6 +41,8 @@ class CalculationController extends Controller
 
         $result = CalculateHelper::calculate($data,$input['privateWithdrawCommission'],$input['businessWithdrawCommission'],$input['depositCharge'],$input['freeWithdrawLimit'],$input['freeWithdrawAmountLimit']);
 
+        if(!$result) return redirect()->to('/')->with('data-not-valid', 'Found a invalid row data');
+
         switch ($input['export']) {
             case 'p':
                 $pdf = PDF::loadView('pdf', compact('result'));

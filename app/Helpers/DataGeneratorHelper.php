@@ -60,7 +60,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 400,
-                        'currency' => 'IRR',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-01',
@@ -68,7 +68,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 650,
-                        'currency' => 'IRR',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-03',
@@ -76,7 +76,7 @@ class DataGeneratorHelper
                         'type' => 'private',
                         'operation' => 'withdraw',
                         'amount' => 100,
-                        'currency' => 'IRR',
+                        'currency' => 'EUR',
                     ],
                     [
                         'date' => '2022-03-10',

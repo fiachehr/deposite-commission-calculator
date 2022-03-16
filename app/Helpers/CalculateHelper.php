@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Helpers\DataValidationHelper;
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
+
 class CalculateHelper
 {
 
@@ -28,6 +31,8 @@ class CalculateHelper
         $currencies = json_decode(file_get_contents($path), true)['rates'];
 
         foreach ($list as $opr) {
+
+            if(!DataValidationHelper::validation($opr)) return false;
 
             $amount = round($opr['amount'] / $currencies[$opr['currency']],2);
 

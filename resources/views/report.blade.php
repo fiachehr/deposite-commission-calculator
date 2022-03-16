@@ -47,8 +47,8 @@ $counter = 1;
                             <td scope="col" class="text-center">{{$item['type']}}</td>
                             <td scope="col" class="text-center">{{$item['operation']}}</td>
                             <td scope="col" class="text-center">{{$item['date']}}</td>
-                            <td scope="col" class="text-center">{{number_format($item['charge'])}}</td>
-                            <td scope="col" class="text-center">{{number_format($item['commission'])}}</td>
+                            <td scope="col" class="text-center">{{$item['charge']}}</td>
+                            <td scope="col" class="text-center">{{$item['commission']}}</td>
                             <td scope="col" class="text-center">{{$item['currency']}}</td>
                             <td scope="col" class="text-center">{{number_format($item['currencyRate'])}}</td>
                         </tr>

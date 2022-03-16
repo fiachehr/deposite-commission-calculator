@@ -15,12 +15,19 @@
     </style>
     <title>Commission Fee Calculator</title>
 </head>
-
 <body>
     <div class="container">
         <div class="card  mt-3">
             <h5 class="card-header">Calculate Withdraw's Commission And Deposite's Charge</h5>
             <div class="card-body">
+                @if (session()->has("data-not-valid"))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Somthing is wrong!</strong> {{session()->get('data-not-valid')}}.
+                </div>
+                @endif
+
+
+
                 {!! Form::open(['method' => 'POST', 'url' => 'calculate' , 'class'=>'row g-3 mt-3' ,"files"=>true]) !!}
 
                 <div class="form-group">
@@ -158,7 +165,8 @@
                     $('#count').css('display','none');
                 }
 
-            })
+            });
+
         });
     </script>
 
