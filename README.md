@@ -63,6 +63,8 @@ in project folder<br/><br/>
 
 composer install<br/>
 composer dump-autoload<br/>
+rename .env.example to .env<br/>
+php artisan key:generate<br/>
 php artisan serve<br/>
 
 ## Unit Testing
